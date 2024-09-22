@@ -10,10 +10,16 @@ if [ -z "$CLOUDFLARE_TOKEN" ]; then
     exit
 fi
 
+if [ -z "$EMAIL" ]; then
+    echo "Need  email address set as EMAIL environment variable"
+    exit
+fi
+
+
 TEMP_FILE=$(mktemp)
 
 echo "dns_cloudflare_api_token = \"${CLOUDFLARE_TOKEN}\"" > $TEMP_FILE
 
-/usr/local/bin/certbot certonly --non-interactive --dns-cloudflare --dns-cloudflare-credentials ${TEMP_FILE} --agree-tos --dry-run -d ${DOMAINS}
+/usr/local/bin/certbot certonly --non-interactive --dns-cloudflare --dns-cloudflare-credentials ${TEMP_FILE} --agree-tos --email "${EMAIL}" --dry-run -d ${DOMAINS}
 
 rm ${TEMP_FILE}
