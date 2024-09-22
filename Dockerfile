@@ -1,6 +1,6 @@
 FROM certbot/certbot
 
-ENTRYPOINT /bin/sh
+ENTRYPOINT []
 ENV DOMAINS=example.com
 ENV CLOUDFLARE_TOKEN=example
 ENV EMAIL=root@example.com
