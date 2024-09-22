@@ -1,9 +1,9 @@
 FROM certbot/certbot
 
 ENTRYPOINT /bin/sh
-ENV DOMAINS
-ENV CLOUDFLARE_TOKEN
-VOLUME CERTPATH
+ENV DOMAINS=example.com
+ENV CLOUDFLARE_TOKEN=example
+VOLUME /etc/letsencrypt
 
 COPY run.sh /usr/local/bin/run.sh
 
