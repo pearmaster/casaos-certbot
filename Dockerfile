@@ -1,5 +1,10 @@
 FROM certbot/certbot
 
 ENTRYPOINT /bin/sh
+ENV DOMAINS
+ENV CLOUDFLARE_TOKEN
+VOLUME CERTPATH
 
-CMD ["run.sh"]
+COPY run.sh /usr/local/bin/run.sh
+
+CMD ["/usr/local/bin/run.sh"]
