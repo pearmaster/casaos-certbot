@@ -22,9 +22,17 @@ echo "dns_cloudflare_api_token = \"${CLOUDFLARE_TOKEN}\"" > $TEMP_FILE
 
 /usr/local/bin/certbot certonly --non-interactive --dns-cloudflare --dns-cloudflare-credentials ${TEMP_FILE} --dns-cloudflare-propagation-seconds 60 --agree-tos --email "${EMAIL}" -d ${DOMAINS}
 
+CERT_DIR="/etc/letsencrypt/live/${DOMAINS%%,*}"
+EMBY_P12_DIR="/etc/letsencrypt/emby/"
+
+mkdir -p ${EMBY_P12_DIR}
+
+openssl pkcs12 -export -out "${EMBY_P12_DIR}/emby.pfx" -inkey "${CERT_DIR}/privkey.pem" -in "${CERT_DIR}/fullchain.pem" -passout "pass:${P12_PASSWORD}"
+
 while true ; do
     sleep 604800
     /usr/local/bin/certbot renew --non-interactive
+    openssl pkcs12 -export -out "${EMBY_P12_DIR}/emby.pfx" -inkey "${CERT_DIR}/privkey.pem" -in "${CERT_DIR}/fullchain.pem" -passout "pass:${P12_PASSWORD}"
 done
 
 
