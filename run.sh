@@ -20,7 +20,7 @@ TEMP_FILE=$(mktemp)
 
 echo "dns_cloudflare_api_token = \"${CLOUDFLARE_TOKEN}\"" > $TEMP_FILE
 
-/usr/local/bin/certbot certonly --non-interactive --dns-cloudflare --dns-cloudflare-credentials ${TEMP_FILE} --agree-tos --email "${EMAIL}" -d ${DOMAINS}
+/usr/local/bin/certbot certonly --non-interactive --dns-cloudflare --dns-cloudflare-credentials ${TEMP_FILE} --dns-cloudflare-propagation-seconds 60 --agree-tos --email "${EMAIL}" -d ${DOMAINS}
 
 while true ; do
     sleep 604800
